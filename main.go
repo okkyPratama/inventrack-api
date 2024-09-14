@@ -7,6 +7,7 @@ import (
 	"inventrack/controllers"
 	"inventrack/database"
 	"inventrack/middleware"
+	"log"
 	"net/http"
 	"os"
 
@@ -19,10 +20,6 @@ var (
 	DB  *sql.DB
 	err error
 )
-
-func protectedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is a protected route"))
-}
 
 func main() {
 	err = godotenv.Load("config/.env")
@@ -62,8 +59,30 @@ func main() {
 	r.HandleFunc("/api/users/login", controllers.Login).Methods("POST")
 
 	//Protected routes
-	r.HandleFunc("/api/protected", middleware.JWTMiddleware(protectedHandler)).Methods("GET")
+	api := r.PathPrefix("/api").Subrouter()
+	api.Use(middleware.JWTMiddleware)
 
-	http.ListenAndServe(":8080", r)
+	// Category routes
+	api.HandleFunc("/categories", controllers.GetAllCategories).Methods("GET")
+	api.HandleFunc("/categories", controllers.CreateCategory).Methods("POST")
+	api.HandleFunc("/categories/{id}", controllers.GetCategory).Methods("GET")
+	api.HandleFunc("/categories/{id}", controllers.UpdateCategory).Methods("PUT")
+	api.HandleFunc("/categories/{id}", controllers.DeleteCategory).Methods("DELETE")
+
+	// Warehouse routes
+	api.HandleFunc("/warehouses", controllers.GetAllWarehouses).Methods("GET")
+	api.HandleFunc("/warehouses", controllers.CreateWarehouse).Methods("POST")
+	api.HandleFunc("/warehouses/{id}", controllers.GetWarehouse).Methods("GET")
+	api.HandleFunc("/warehouses/{id}", controllers.UpdateWarehouse).Methods("PUT")
+	api.HandleFunc("/warehouses/{id}", controllers.DeleteWarehouse).Methods("DELETE")
+
+	// Supplier routes
+	api.HandleFunc("/suppliers", controllers.GetAllSuppliers).Methods("GET")
+	api.HandleFunc("/suppliers", controllers.CreateSupplier).Methods("POST")
+	api.HandleFunc("/suppliers/{id}", controllers.GetSupplier).Methods("GET")
+	api.HandleFunc("/suppliers/{id}", controllers.UpdateSupplier).Methods("PUT")
+	api.HandleFunc("/suppliers/{id}", controllers.DeleteSupplier).Methods("DELETE")
+
+	log.Fatal(http.ListenAndServe(":8080", r))
 
 }

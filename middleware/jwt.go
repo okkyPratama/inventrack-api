@@ -1,14 +1,14 @@
 package middleware
 
 import (
+	"context"
 	"inventrack/auth"
 	"net/http"
-	"strconv"
 	"strings"
 )
 
-func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func JWTMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			http.Error(w, "Missing auth token", http.StatusUnauthorized)
@@ -28,7 +28,8 @@ func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		r.Header.Set("UserId", strconv.Itoa(userId))
-		next.ServeHTTP(w, r)
-	}
+		// Menyimpan userId di context request
+		ctx := context.WithValue(r.Context(), "userId", userId)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
