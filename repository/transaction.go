@@ -38,6 +38,7 @@ func GetTransactionsByProductID(db DBExecutor, productID int) ([]structs.Transac
 	}
 	return transactions, nil
 }
+
 func UpdateProductStock(db DBExecutor, productID, quantity int) error {
 	query := `UPDATE products SET stock = stock + $1 WHERE id = $2`
 	_, err := db.Exec(query, quantity, productID)
