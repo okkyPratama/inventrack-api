@@ -83,6 +83,16 @@ func main() {
 	api.HandleFunc("/suppliers/{id}", controllers.UpdateSupplier).Methods("PUT")
 	api.HandleFunc("/suppliers/{id}", controllers.DeleteSupplier).Methods("DELETE")
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	// Product routes
+	api.HandleFunc("/products", controllers.GetAllProducts).Methods("GET")
+	api.HandleFunc("/products", controllers.CreateProduct).Methods("POST")
+	api.HandleFunc("/products/{id}", controllers.GetProduct).Methods("GET")
+	api.HandleFunc("/products/{id}", controllers.UpdateProduct).Methods("PUT")
+	api.HandleFunc("/products/{id}", controllers.DeleteProduct).Methods("DELETE")
 
+	// Transaction routes
+	api.HandleFunc("/transactions", controllers.CreateTransaction).Methods("POST")
+	api.HandleFunc("/products/{id}/transactions", controllers.GetProductTransactions).Methods("GET")
+
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
