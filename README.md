@@ -1,6 +1,6 @@
 # InvenTrack API
 
-Inventory Tracking (Inventory Tracking) API adalah sistem manajemen pengelolaan inventory yang dibangun menggunakan Go. Sistem ini menyediakan API RESTful untuk mengelola kategori, produk, pemasok, gudang, dan transaksi.
+InvenTrack (Inventory Tracking) API adalah sistem manajemen pengelolaan inventory yang dibangun menggunakan Go. Sistem ini menyediakan API RESTful untuk mengelola kategori, produk, pemasok, gudang, dan transaksi.
 
 ## Fitur
 
@@ -12,7 +12,7 @@ Inventory Tracking (Inventory Tracking) API adalah sistem manajemen pengelolaan 
 - Pencatatan transaksi (masuk/keluar) dengan pembaruan stok otomatis
 - Database PostgreSQL dengan migrasi otomatis
 
-## Persyaratan
+## Dependencies
 
 - Go 1.15+
 - PostgreSQL
@@ -25,9 +25,8 @@ Inventory Tracking (Inventory Tracking) API adalah sistem manajemen pengelolaan 
 ## Instalasi
 
 1. Klon repositori ini
-2. Salin `.env.example` ke `.env` dan sesuaikan konfigurasi database
-3. Jalankan `go mod tidy` untuk menginstal dependensi
-4. Jalankan aplikasi dengan `go run main.go`
+2. Jalankan `go mod tidy` untuk menginstal dependensi
+3. Jalankan aplikasi dengan `go run main.go`
 
 ## Struktur Proyek
 
@@ -92,15 +91,15 @@ inventrack-api/
 - `PUT /api/products/{id}` : Memperbarui produk
 - `DELETE /api/products/{id}` : Menghapus produk
 
-### Pemasok
+### Supplier
 
-- `GET /api/suppliers` : Mendapatkan semua pemasok
-- `POST /api/suppliers` : Membuat pemasok baru
-- `GET /api/suppliers/{id}` : Mendapatkan detail pemasok
-- `PUT /api/suppliers/{id}` : Memperbarui pemasok
-- `DELETE /api/suppliers/{id}` : Menghapus pemasok
+- `GET /api/suppliers` : Mendapatkan semua supplier
+- `POST /api/suppliers` : Membuat supplier baru
+- `GET /api/suppliers/{id}` : Mendapatkan detail supplier
+- `PUT /api/suppliers/{id}` : Memperbarui supplier
+- `DELETE /api/suppliers/{id}` : Menghapus supplier
 
-### Gudang
+### Warehouse
 
 - `GET /api/warehouses` : Mendapatkan semua gudang
 - `POST /api/warehouses` : Membuat gudang baru
@@ -123,6 +122,9 @@ inventrack-api/
 
 ## Keamanan
 
-- Semua endpoint (kecuali pendaftaran dan login) dilindungi dengan middleware JWT
+- Semua endpoint (kecuali register dan login) dilindungi dengan middleware JWT
 - Kata sandi di-hash sebelum disimpan di database
 - Penggunaan prepared statements untuk mencegah SQL injection
+
+## Deployment Link
+- [https://inventrack-api.up.railway.app](https://inventrack-api.up.railway.app)
