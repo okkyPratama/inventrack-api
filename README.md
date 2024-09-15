@@ -12,6 +12,9 @@ InvenTrack (Inventory Tracking) API adalah sistem manajemen pengelolaan inventor
 - Pencatatan transaksi (masuk/keluar) dengan pembaruan stok otomatis
 - Database PostgreSQL dengan migrasi otomatis
 
+## ERD Database
+![alt text](https://github.com/okkyPratama/inventrack-api/blob/main/inventrack.png?raw=true)
+
 ## Dependencies
 
 - Go 1.15+
@@ -67,8 +70,6 @@ inventrack-api/
 ├── go.sum
 └── main.go
 ```
-## ERD Database
-![alt text](https://github.com/okkyPratama/inventrack-api/blob/main/inventrack.png?raw=true)
 
 ## Endpoint API
 
