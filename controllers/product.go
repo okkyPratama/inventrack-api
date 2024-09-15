@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"inventrack/database"
 	"inventrack/repository"
@@ -82,14 +83,18 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid product ID", http.StatusBadRequest)
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid product ID"})
 		return
 	}
 
 	err = repository.DeleteProduct(database.DbConnection, id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		if err == sql.ErrNoRows {
+			respondJSON(w, http.StatusNotFound, map[string]string{"error": "Product not found"})
+		} else {
+			respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "Failed to delete product"})
+		}
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
+	respondJSON(w, http.StatusOK, map[string]string{"message": "Product deleted successfully"})
 }

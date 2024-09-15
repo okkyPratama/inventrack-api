@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"database/sql"
 	"inventrack/database"
 	"inventrack/repository"
 	"inventrack/structs"
@@ -80,14 +81,18 @@ func DeleteSupplier(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid supplier ID", http.StatusBadRequest)
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid supplier ID"})
 		return
 	}
 
 	err = repository.DeleteSupplier(database.DbConnection, id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		if err == sql.ErrNoRows {
+			respondJSON(w, http.StatusNotFound, map[string]string{"error": "Supplier not found"})
+		} else {
+			respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "Failed to delete supplier"})
+		}
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
+	respondJSON(w, http.StatusOK, map[string]string{"message": "Supplier deleted successfully"})
 }

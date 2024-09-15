@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"inventrack/database"
 	"inventrack/repository"
@@ -81,16 +82,20 @@ func DeleteCategory(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid category ID", http.StatusBadRequest)
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid category ID"})
 		return
 	}
 
 	err = repository.DeleteCategory(database.DbConnection, id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		if err == sql.ErrNoRows {
+			respondJSON(w, http.StatusNotFound, map[string]string{"error": "Category not found"})
+		} else {
+			respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "Failed to delete category"})
+		}
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
+	respondJSON(w, http.StatusOK, map[string]string{"message": "Category deleted successfully"})
 }
 
 func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
