@@ -67,6 +67,8 @@ inventrack-api/
 ├── go.sum
 └── main.go
 ```
+## ERD Database
+![alt text](https://github.com/okkyPratama/inventrack-api/blob/main/inventrack.png?raw=true)
 
 ## Endpoint API
 
@@ -128,3 +130,7 @@ inventrack-api/
 
 ## Deployment Link
 - [https://inventrack-api.up.railway.app](https://inventrack-api.up.railway.app)
+
+Untuk mengakses API, gunakan URL di atas sebagai base URL. Misalnya:
+- Register: POST https://inventrack-api.up.railway.app/api/users/register
+- Login: POST https://inventrack-api.up.railway.app/api/users/login
