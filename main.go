@@ -77,13 +77,6 @@ func main() {
 	api.HandleFunc("/categories/{id}", controllers.UpdateCategory).Methods("PUT")
 	api.HandleFunc("/categories/{id}", controllers.DeleteCategory).Methods("DELETE")
 
-	// Warehouse routes
-	api.HandleFunc("/warehouses", controllers.GetAllWarehouses).Methods("GET")
-	api.HandleFunc("/warehouses", controllers.CreateWarehouse).Methods("POST")
-	api.HandleFunc("/warehouses/{id}", controllers.GetWarehouse).Methods("GET")
-	api.HandleFunc("/warehouses/{id}", controllers.UpdateWarehouse).Methods("PUT")
-	api.HandleFunc("/warehouses/{id}", controllers.DeleteWarehouse).Methods("DELETE")
-
 	// Supplier routes
 	api.HandleFunc("/suppliers", controllers.GetAllSuppliers).Methods("GET")
 	api.HandleFunc("/suppliers", controllers.CreateSupplier).Methods("POST")
