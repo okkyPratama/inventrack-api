@@ -10,6 +10,11 @@ InvenTrack (Inventory Tracking) API adalah sistem manajemen pengelolaan persedia
 - CRUD Supplier
 - Pencatatan transaksi (masuk/keluar) dengan pembaruan stok otomatis di produk
 
+## Resources
+- [Slide ppt](https://drive.google.com/file/d/1aEIQVi9-FHsiFpJL8aQ8udFuAhyUMGE7/view?usp=sharing)
+- [Video penjelasan](https://drive.google.com/file/d/18at3YK26UPNEUEzT37D-ggzGtCyeGuMY/view?usp=sharing)
+- [Postman Collection](https://drive.google.com/file/d/1X9RWmoSAOKbmcR4khFSneOO0gt6GGLNi/view?usp=sharing)
+
 ## ERD Database
 ![alt text](https://github.com/okkyPratama/inventrack-api/blob/main/inventrack.png?raw=true)
 
